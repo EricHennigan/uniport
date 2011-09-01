@@ -11,4 +11,9 @@ DESTDIR = ./build
 MOC_DIR = ./build
 OBJECTS_DIR = ./build
 
-SOURCES += src/main.cpp
+SOURCES += \
+    src/main.cpp \
+    src/Portfolio.cpp
+
+HEADERS += \
+    src/Portfolio.h
