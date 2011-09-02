@@ -31,7 +31,7 @@ void Portfolio::normalize()
     m_isNormalized = true;
 }
 
-void Portfolio::subscribe(const TickStream *ts)
+void Portfolio::subscribe(Market const *ts)
 {
     Q_ASSERT(m_isNormalized);
 

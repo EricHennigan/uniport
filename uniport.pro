@@ -13,7 +13,9 @@ OBJECTS_DIR = ./build
 
 SOURCES += \
     src/main.cpp \
-    src/Portfolio.cpp
+    src/Portfolio.cpp \
+    src/Market.cpp
 
 HEADERS += \
-    src/Portfolio.h
+    src/Portfolio.h \
+    src/Market.h

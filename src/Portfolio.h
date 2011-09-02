@@ -18,7 +18,7 @@ public:
     void add(Stock stock, qreal weight, qreal amount=0.0);
     void normalize();
 
-    void subscribe(TickStream const *ts);
+    void subscribe(Market const *ts);
     qreal value(Market const &market) const;
 
 private slots:
