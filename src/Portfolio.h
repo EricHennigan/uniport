@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QHash>
 
-class Stock;
+#include "Stock.h"
 class Market;
 class TickStream;
 
@@ -31,7 +31,7 @@ private:
         qreal weight;
         qreal amount;
     } Holding;
-    QHash<Stock, Holdings> m_holdings;
+    QHash<Stock, Holding> m_holdings;
 };
 
 #endif // PORTFOLIO_H

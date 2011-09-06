@@ -1,4 +1,6 @@
 #include "Market.h"
+#include "Tick.h"
+#include "TickStream.h"
 
 Market::Market(QObject *parent)
     : QObject(parent)
@@ -9,11 +11,17 @@ Market::Market(QObject *parent)
 void Market::update(Tick const &t)
 {
     m_prices[t.stock()] = t;
-    emit tick(t;
+    emit tick(t);
 }
 
 void Market::subscribe(TickStream const *ts)
 {
     connect(ts, SIGNAL(tick(Tick const &tick)),
             this, SLOT(update(Tick const &tick)));
+}
+
+Tick Market::operator[](Stock const &stock) const
+{
+    Q_ASSERT(m_prices.contains(stock));
+    return m_prices[stock];
 }

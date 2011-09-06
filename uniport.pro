@@ -14,8 +14,12 @@ OBJECTS_DIR = ./build
 SOURCES += \
     src/main.cpp \
     src/Portfolio.cpp \
-    src/Market.cpp
+    src/Market.cpp \
+    src/Tick.cpp
 
 HEADERS += \
     src/Portfolio.h \
-    src/Market.h
+    src/Market.h \
+    src/Stock.h \
+    src/Tick.h \
+    src/TickStream.h

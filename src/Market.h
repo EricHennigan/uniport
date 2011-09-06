@@ -4,8 +4,8 @@
 #include <QObject>
 #include <QHash>
 
-class Tick;
-class Stock;
+#include "Stock.h"
+#include "Tick.h"
 class TickStream;
 
 class Market : public QObject
@@ -15,6 +15,7 @@ public:
     explicit Market(QObject *parent = 0);
 
     void subscribe(TickStream const *ts);
+    Tick operator[](Stock const &stock) const;
 
 signals:
     void tick(Tick const &tick);

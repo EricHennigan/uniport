@@ -1,4 +1,7 @@
 #include "Portfolio.h"
+#include "Stock.h"
+#include "Market.h"
+#include "Tick.h"
 
 Portfolio::Portfolio()
     : m_isNormalized(false)
@@ -8,12 +11,12 @@ Portfolio::Portfolio()
 
 void Portfolio::add(Stock stock, qreal weight, qreal amount)
 {
-    Q_ASSERT(!m_weights.contains(stock));
+    Q_ASSERT(!m_holdings.contains(stock));
     Q_ASSERT(0.0 <= weight && weight <= 1.0);
     Holding h;
     h.weight = weight;
     h.amount = amount;
-    m_weights.insert(stock, h);
+    m_holdings.insert(stock, h);
     m_isNormalized = false;
 }
 
@@ -47,7 +50,7 @@ qreal Portfolio::value(Market const &market) const
     QHashIterator<Stock, Holding> i(m_holdings);
     while (i.hasNext()) {
         i.next();
-        val += i.value().amount * market[i.key()];
+        val += i.value().amount * market[i.key()].price();
     }
     return val;
 }
@@ -57,6 +60,7 @@ void Portfolio::rebalance(Market const &market)
     Q_ASSERT(m_isNormalized);
     Q_ASSERT(false); // todo: must test this first
 
+    /*
     qreal value = value(market);
     QMutableHashIterator<Stock, Holding> i(m_holdings);
     while(i.hasNext()) {
@@ -69,5 +73,6 @@ void Portfolio::rebalance(Market const &market)
         if (qAbs(adjust) > .01)
             i.value().amount += adjust;
     }
+    */
 }
 
