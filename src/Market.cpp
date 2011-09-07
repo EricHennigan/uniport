@@ -3,7 +3,7 @@
 #include "TickStream.h"
 
 Market::Market(QObject *parent)
-    : QObject(parent)
+    : TickStream(parent)
     , m_prices(QHash<Stock,Tick>())
 {
 }

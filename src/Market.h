@@ -6,9 +6,9 @@
 
 #include "Stock.h"
 #include "Tick.h"
-class TickStream;
+#include "TickStream.h"
 
-class Market : public QObject
+class Market : public TickStream
 {
     Q_OBJECT
 public:

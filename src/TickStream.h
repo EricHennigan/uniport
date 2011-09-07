@@ -8,7 +8,10 @@ class TickStream : public QObject
 {
     Q_OBJECT
 public:
-    TickStream();
+    TickStream(QObject *parent=0)
+        :QObject(parent)
+    {
+    }
 
 signals:
     void tick(Tick const &tick);

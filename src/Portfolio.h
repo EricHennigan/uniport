@@ -16,7 +16,7 @@ public:
     Portfolio();
 
     void add(Stock stock, qreal weight, qreal amount=0.0);
-    void normalize();
+    void normalizeWeights();
 
     void subscribe(Market const *ts);
     qreal value(Market const &market) const;

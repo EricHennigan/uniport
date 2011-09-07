@@ -20,7 +20,7 @@ void Portfolio::add(Stock stock, qreal weight, qreal amount)
     m_isNormalized = false;
 }
 
-void Portfolio::normalize()
+void Portfolio::normalizeWeights()
 {
     qreal total = 0.0;
     foreach(Holding h, m_holdings)

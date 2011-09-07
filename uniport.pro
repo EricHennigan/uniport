@@ -15,11 +15,13 @@ SOURCES += \
     src/main.cpp \
     src/Portfolio.cpp \
     src/Market.cpp \
-    src/Tick.cpp
+    src/Tick.cpp \
+    test/recordedtickstream.cpp
 
 HEADERS += \
     src/Portfolio.h \
     src/Market.h \
     src/Stock.h \
     src/Tick.h \
-    src/TickStream.h
+    src/TickStream.h \
+    test/recordedtickstream.h
