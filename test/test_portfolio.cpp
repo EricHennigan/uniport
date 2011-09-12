@@ -1,5 +1,5 @@
 #include <QString>
-#include <QtTest/QtTest>
+#include <QtTest>
 
 #include "../src/Stock.h"
 #include "../src/Portfolio.h"
@@ -13,58 +13,87 @@ public:
     TestPortfolio();
 
 private Q_SLOTS:
-    void initTestCase();
-    void cleanupTestCase();
-    void computes_value_correctly();
-    //void testCase1_data();
+    void Portfolio_correctly_initializes();
+    void Portfolio_correctly_rebalances();
+    void Portfolio_makes_money_on_random_stock();
 };
 
 TestPortfolio::TestPortfolio()
 {
 }
 
-void TestPortfolio::initTestCase()
+void TestPortfolio::Portfolio_correctly_initializes()
 {
-}
+    RecordedMarket *market = new RecordedMarket();
+    market->initialize(USD, 1.0);
+    market->initialize(BITCOIN, 1.0);
 
-void TestPortfolio::cleanupTestCase()
-{
-}
-
-void TestPortfolio::computes_value_correctly()
-{
-    Portfolio *p = new Portfolio();
-    p->add(USD, .5);
-    p->add(BITCOIN, .5);
+    Portfolio *p = new Portfolio(market);
+    p->add(USD, .5, 100.);
+    p->add(BITCOIN, .5, 100.);
     p->normalizeWeights();
 
-    RecordedMarket *ts = new RecordedMarket();
-    ts->record(USD, 1.0);
-    ts->record(BITCOIN, 3.0);
+    QCOMPARE(p->value(), 200.);
 
-    p->subscribe(ts);
+    delete p;
+    delete market;
+}
+
+void TestPortfolio::Portfolio_correctly_rebalances()
+{
+    RecordedMarket *ts = new RecordedMarket();
+    ts->initialize(USD, 1.0);
+    ts->initialize(BITCOIN, 1.0);
+    ts->record(BITCOIN, 0.5);
+
+    Portfolio *p = new Portfolio(ts);
+    p->add(USD, .5, 200.);
+    p->add(BITCOIN, .5, 0.);
+    p->normalizeWeights();
+
     ts->play();
 
-    QCOMPARE(p->value(*ts), 1.0);
+    QCOMPARE(p->value(), 200.);
+    QCOMPARE(p->amount(USD), 100.);
+    QCOMPARE(p->amount(BITCOIN), 200.);
 
-    delete ts;
     delete p;
+    delete ts;
 }
 
-/*
-void TestPortfolio::testCase1()
+double rand_in_range(int low, int high)
 {
-    QFETCH(QString, data);
-    QVERIFY2(true, "Failure");
+    Q_ASSERT(high > low);
+    Q_ASSERT(high > 0);
+    Q_ASSERT(low > 0);
+
+    int r = qrand();
+    return low + (r / (double)RAND_MAX) * (high - low);
 }
 
-void TestPortfolio::testCase1_data()
+void TestPortfolio::Portfolio_makes_money_on_random_stock()
 {
-    QTest::addColumn<QString>("data");
-    QTest::newRow("0") << QString();
+    // TODO: is this test actually doing what it should?
+    Q_ASSERT(false);
+
+    RecordedMarket *ts = new RecordedMarket();
+    ts->initialize(USD, 1.0);
+    ts->initialize(BITCOIN, 0.5);
+    for(int i=0; i<10; ++i)
+        ts->record(BITCOIN, rand_in_range(1, 10));
+
+    Portfolio *p = new Portfolio(ts);
+    p->add(USD, .5, 50.);
+    p->add(BITCOIN, .5, 50.);
+    p->normalizeWeights();
+
+    ts->play();
+
+    QVERIFY(p->value() > 200.);
+
+    delete p;
+    delete ts;
 }
-*/
 
-QTEST_APPLESS_MAIN(TestPortfolio);
-
+QTEST_MAIN(TestPortfolio);
 #include "test_portfolio.moc"

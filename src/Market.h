@@ -15,15 +15,16 @@ public:
     explicit Market(QObject *parent = 0);
 
     void subscribe(TickStream const *ts);
-    Tick operator[](Stock const &stock) const;
+    Tick lookup(Stock const &stock) const;
 
 signals:
     void tick(Tick const &tick);
 
-public slots:
+protected slots:
     void update(Tick const &tick);
 
-private:
+protected:
+    // TODO: privatize this data
     QHash<Stock, Tick> m_prices;
 };
 

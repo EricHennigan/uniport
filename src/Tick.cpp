@@ -16,6 +16,11 @@ Tick::Tick(Stock const &stock, qreal const price, QDateTime const &dateTime)
 {
 }
 
+bool Tick::isValid() const
+{
+    return m_dateTime.isValid() && (m_price != -0.0);
+}
+
 QDateTime Tick::dateTime() const
 {
     return m_dateTime;

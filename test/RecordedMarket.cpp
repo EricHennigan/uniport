@@ -1,11 +1,17 @@
 #include "RecordedMarket.h"
 #include <QTimer>
 #include <QDateTime>
+#include <QEventLoop>
+#include <QTest>
 
 RecordedMarket::RecordedMarket()
     :m_record(QQueue<Tick>())
-    ,m_timer(new QTimer(this))
 {
+}
+
+void RecordedMarket::initialize(Stock stock, qreal price)
+{
+    m_prices[stock] = Tick(stock, price, QDateTime::currentDateTime());
 }
 
 void RecordedMarket::record(Stock stock, qreal price)
@@ -15,19 +21,9 @@ void RecordedMarket::record(Stock stock, qreal price)
 
 void RecordedMarket::play()
 {
-    connect(m_timer, SIGNAL(timeout()),
-            this, SLOT(emitNextTick()));
-    m_timer->start(10);
+    while(!m_record.isEmpty()) {
+        Tick t = m_record.dequeue();
+        QTest::qWait(10);
+        Market::update(t);
+    }
 }
-
-void RecordedMarket::emitNextTick()
-{
-    if (m_record.isEmpty())
-        m_timer->stop();
-
-    Tick t = m_record.dequeue();
-    Market::update(t);
-    emit Market::tick(t);
-}
-
-

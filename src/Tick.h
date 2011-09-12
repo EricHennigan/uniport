@@ -10,6 +10,8 @@ public:
     Tick();
     Tick(Stock const &stock, qreal const price, QDateTime const &dateTime);
 
+    bool isValid() const;
+
 public:
     QDateTime dateTime() const;
     QDate date() const;

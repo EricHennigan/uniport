@@ -16,7 +16,8 @@ SOURCES += \
     src/Portfolio.cpp \
     src/Market.cpp \
     src/Tick.cpp \
-    test/recordedtickstream.cpp
+    test/recordedtickstream.cpp \
+    test/TimerThread.cpp
 
 HEADERS += \
     src/Portfolio.h \
@@ -24,4 +25,5 @@ HEADERS += \
     src/Stock.h \
     src/Tick.h \
     src/TickStream.h \
-    test/recordedtickstream.h
+    test/recordedtickstream.h \
+    test/TimerThread.h

@@ -12,7 +12,7 @@ QT       += testlib
 QT       -= gui
 
 TARGET = test
-CONFIG   += console
+CONFIG   += console debug
 CONFIG   -= app_bundle
 
 TEMPLATE = app

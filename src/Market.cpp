@@ -20,8 +20,10 @@ void Market::subscribe(TickStream const *ts)
             this, SLOT(update(Tick const &tick)));
 }
 
-Tick Market::operator[](Stock const &stock) const
+Tick Market::lookup(Stock const &stock) const
 {
     Q_ASSERT(m_prices.contains(stock));
-    return m_prices[stock];
+    Tick const &t = m_prices[stock];
+    Q_ASSERT(t.isValid());
+    return t;
 }

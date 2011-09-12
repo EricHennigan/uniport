@@ -2,3 +2,23 @@
 Tue Aug 30 22:06:26 PDT 2011
 
   get the project started
+
+============================
+Sun Sep 11 21:44:04 PDT 2011
+
+  Found out that the QTest library doesn't let me do event-driven testing
+  because of issues regarding a qApp having been started (needed to support any
+  event queue). Without that, cannot create a QTimer to replay recorded events.
+
+  Will now do a redesign:
+    Tick still be the time / price event
+    TickStream class represents any source generating ticks
+    Market subclasses TickStream, but holds a record of the latest seen ticks
+           can act as a map from Stock->price
+    Portfolio class currently implements a continuously rebalancing portfolio
+
+    all prices are given in US dollars
+
+  Current Testing plan:
+    Mock the Market class to replay a recorded history of price changes, play
+    these back in a loop. Then check that the portfolio rebalances properly.

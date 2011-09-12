@@ -11,15 +11,12 @@ class RecordedMarket : public Market
 public:
     RecordedMarket();
 
-    void record(Stock, qreal price);
+    void initialize(Stock stock, qreal price);
+    void record(Stock stock, qreal price);
     void play();
-
-private slots:
-    void emitNextTick();
 
 private:
     QQueue<Tick> m_record;
-    QTimer *m_timer;
 };
 
 #endif // RECORDEDTICKSTREAM_H
